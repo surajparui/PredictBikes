@@ -1,34 +1,28 @@
-# Report: Predict Bike Sharing Demand with AutoGluon Solution
-#### Suraj M Parui
+### Report: Predict Bike Sharing Demand with AutoGluon Solution
+#Author: Suraj M Parui
 
+This repository contains the solution for the "Predict Bike Sharing Demand" project using AutoGluon. The goal of this project is to develop a machine learning model that accurately predicts the demand for bike sharing based on various features.
 
-#### Sorry Sir/Madam i had issues with exporting to HTML it was showing an error so i uploaded a Markdown file
+##Initial Training
+During the initial stage of training, the predictions were carefully examined to identify any negative values. Fortunately, all the predictions were positive, eliminating the need to assign values to 0 before submission. Additionally, there was no need to convert the count column from float32 to int64 as the regression output was evaluated based on the root mean square logarithmic error (RMSLE) metric.
 
-## Initial Training
-### What did you realize when you tried to submit your predictions? What changes were needed to the output of the predictor to submit your results?
-During the initial stage of training, I carefully checked the predictions to identify any negative values. Fortunately, all the values turned out to be positive, which meant I didn't have to assign any values to 0 before submitting. Although I considered converting the count column from float32 to int64, I realized that it wasn't necessary for the regression output based on the competition's evaluation metric, which is the root mean square logarithmic error.
+The top-ranked model that performed the best was the Weighted_Ensemble_L3 model. This model is a stack of three layers of previously trained models, designed to maximize the validation accuracy.
 
-### What was the top ranked model that performed?
-The highest-performing model, which obtained the lowest root mean square error (RMSE) score, was the Weighted_Ensemble_L3 model. This model was created by stacking three layers of previously trained models, aiming to maximize the validation accuracy.
-
-## Exploratory data analysis and feature creation
-### What did the exploratory analysis find and how did you add additional features?
-During the exploratory data analysis (EDA) phase, I examined the histograms and made several observations:
+##Exploratory Data Analysis and Feature Creation
+During the exploratory data analysis (EDA), several observations were made:
 
 Certain features, such as "holiday" and "working day," were binary in nature.
-Other features, including "temp," "atemp," "humidity," and "windspeed," exhibited a near-normal distribution.
-Some features, like "season" and "weather," were categorical. It appeared that while the data was distributed fairly evenly across the four seasons, there was a predominant weather category (1).
-The data followed a monthly pattern across the years 2011 and 2012. The first 19 days of each month were allocated for training, while the remaining days were designated for testing. Furthermore, the data was recorded at various hours throughout the day.
-In line with the recommendations in the notebook, I decided to include the "hour" feature in the dataset. This choice seemed logical as it provided a more general characteristic that could help the trained models better understand the potential demand for bike sharing during different times of the day, without specifying a particular year, month, or day.
-
-### How much better did your model perform after adding additional features and why do you think that is?
-The top-performing model demonstrated a significant improvement in performance, with the root mean square error (RMSE) decreasing from 55.72 to 0.1861 for the validation score. Additionally, the test error, measured by the root mean square logarithmic error (RMSLE), decreased from 1.80405 to 0.6416. These improvements can be attributed to the inclusion of the "hour" feature in the dataset.
-
-The addition of the "hour" feature provided valuable information and insights to the trained models. It allowed them to better understand the general patterns of bike share demand throughout the day, without being restricted to specific years, months, or days. Based on the histogram analysis of the "hour" feature, it was evident that the data was recorded relatively evenly across all hours of the day. This indicates that the "hour" feature contained valuable information, contributing to the improved performance of the models.
-
+Features like "temp," "atemp," "humidity," and "windspeed" exhibited a near-normal distribution.
+Categorical features, such as "season" and "weather," were identified.
+The data followed a monthly pattern across the years 2011 and 2012.
+The "hour" feature was included in the dataset to capture the demand patterns throughout the day.
+The inclusion of the "hour" feature significantly improved the performance of the model. It provided valuable information and insights to the trained models, allowing them to better understand the demand patterns at different times of the day.
 ![hour_feature_hist.png](img/hour_feature_hist.png)
 
 ## Hyper parameter tuning
+After trying different hyperparameters, the model's performance improved. Although the training root mean square error (RMSE) increased slightly, the test error (RMSLE) decreased significantly. This suggests that the model may have a slightly higher bias but better variance, resulting in improved generalization on the test data.
+
+By focusing on tree-based models with boosting ensemble techniques, such as Gradient Boosting, CATboost, and XGBoost, the model achieved better generalization and reduced the test error. This highlights the importance of selecting appropriate models and optimizing their hyperparameters for better performance.
 ### How much better did your model perform after trying different hyper parameters?
 
 The best model showed an increase in training root mean square error (RMSE) from 48.086 to 55.72. However, the model's test error decreased significantly from 1.80405 to 0.6416. This suggests that the new model may have a slightly higher bias but better variance, resulting in improved generalization on the test data.
@@ -42,6 +36,12 @@ After assessing the results, I believe it would be beneficial to allocate more t
 
 Therefore, I would prioritize dedicating additional time to feature engineering before delving into hyperparameter optimization. This approach would involve identifying and creating new features that could potentially provide valuable insights and boost the model's performance. By focusing on feature engineering initially, we can lay a solid foundation for the models to extract meaningful patterns and relationships from the data, potentially leading to further improvements in overall performance.
 
+##Future Improvements
+If given more time with this dataset, the following areas could be further explored and improved:
+
+Feature Engineering: Allocate more time to feature engineering and explore new features that could provide valuable insights and boost the model's performance. Feature engineering plays a crucial role in enhancing model performance and extracting meaningful patterns from the data.
+
+Hyperparameter Optimization: Continue experimenting with different hyperparameter settings to find the best configurations for each model. Fine-tuning the hyperparameters can lead to further improvements in model performance.
 ### Create a table with the models you ran, the hyperparameters modified, and the kaggle score.
 
 model	hpo1	hpo2	hpo3	score
